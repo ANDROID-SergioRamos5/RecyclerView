@@ -59,7 +59,10 @@ public class Adaptador extends RecyclerView.Adapter implements View.OnClickListe
     }
 
     @Override
-    public boolean onLongClick(View view) {
-        return false;
+    public boolean onLongClick(View view)
+    {
+        if (longListener != null)
+            longListener.onLongClick(view);
+        return true;
     }
 }

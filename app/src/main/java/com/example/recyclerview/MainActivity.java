@@ -30,6 +30,14 @@ public class MainActivity extends AppCompatActivity  {
                 Toast.makeText(MainActivity.this, datos[pos].getCorreo(), Toast.LENGTH_SHORT).show();
             }
         });
+        adaptador.setLongListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                int pos = recycler.getChildAdapterPosition(v);
+                Toast.makeText(MainActivity.this, "Nombre " + datos[pos].getNombre() + " Apellido " + datos[pos].getApellido(),Toast.LENGTH_LONG).show();
+                return true;
+            }
+        });
         recycler.setAdapter(adaptador);
         recycler.setHasFixedSize(true);
         recycler.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL, false));
