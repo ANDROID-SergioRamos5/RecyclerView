@@ -6,11 +6,18 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity  {
+
+    public interface onImagenClickListener
+    {
+        void onImagenClick(Usuario usuario);
+    }
 
     Usuario[] datos = new Usuario[]{new Usuario("Juan Pedro", "Gomez García", "juanpe@gmail.com"),
                                     new Usuario("Lola", "Perez Pardo", "lolitaperez@gmail.com"),
@@ -40,10 +47,15 @@ public class MainActivity extends AppCompatActivity  {
                 return true;
             }
         });
-        adaptador.ClickImagen(new View.OnClickListener() {
+        adaptador.ClickImagen(new Adaptador.onImagenClickListener() {
             @Override
-            public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Has pulsado la imagen", Toast.LENGTH_LONG).show();
+            public void onImagenClick(Usuario usuario) {
+                Intent intento = new Intent(Intent.ACTION_SEND);
+                intento.setType("text/html");
+                intento.setData(Uri.parse("mailto:"));
+                intento.putExtra(Intent.EXTRA_EMAIL, usuario.getCorreo());
+                startActivity(Intent.createChooser(intento,"Email "));
+                Toast.makeText(MainActivity.this, "Enviando email a " + usuario.getCorreo(), Toast.LENGTH_SHORT).show();
             }
         });
         recycler.setAdapter(adaptador);

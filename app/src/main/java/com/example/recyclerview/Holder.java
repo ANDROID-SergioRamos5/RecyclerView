@@ -11,10 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
+    public interface onImagenClickListener
+    {
+        void onImagenClick(Usuario usuario);
+    }
+
     TextView txtNombre, txtApellido;
     ImageButton botonImagen;
-    View.OnClickListener listener;
+    onImagenClickListener listener;
     Context context;
+    Usuario usuario;
 
     public Holder(View itemView, Context context)
     {
@@ -23,6 +29,7 @@ public class Holder extends RecyclerView.ViewHolder implements View.OnClickListe
         txtNombre = (TextView)itemView.findViewById(R.id.textonombre);
         txtApellido = (TextView) itemView.findViewById(R.id.textApellido);
         botonImagen = (ImageButton) itemView.findViewById(R.id.imagenButton);
+
         botonImagen.setOnClickListener(this);
 
     }
@@ -34,17 +41,18 @@ public class Holder extends RecyclerView.ViewHolder implements View.OnClickListe
         else
             itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorImpares));
 
+        this.usuario = usuario;
         txtNombre.setText(usuario.getNombre());
         txtApellido.setText(usuario.getApellido());
     }
 
-    public void ClickImagen(View.OnClickListener listener)
+    public void ClickImagen(onImagenClickListener listener)
     {
         if(listener != null) this.listener = listener;
     }
 
     @Override
     public void onClick(View view) {
-        if (listener != null) listener.onClick(view);
+        if (listener != null) listener.onImagenClick(usuario);
     }
 }

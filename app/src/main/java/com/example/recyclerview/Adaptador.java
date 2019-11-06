@@ -8,12 +8,19 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+
 public class Adaptador extends RecyclerView.Adapter implements View.OnClickListener, View.OnLongClickListener
 {
+    public interface onImagenClickListener
+    {
+        void onImagenClick(Usuario usuario);
+    }
+
     Context context;
     Holder holder;
     View.OnClickListener listener, listenerImage;
     View.OnLongClickListener longListener;
+    onImagenClickListener listenerImg;
 
     public Adaptador(Context  context)
     {
@@ -27,10 +34,11 @@ public class Adaptador extends RecyclerView.Adapter implements View.OnClickListe
         holder = new Holder(view, context);
         view.setOnClickListener(this);
         view.setOnLongClickListener(this);
-        holder.ClickImagen(new View.OnClickListener() {
+
+        holder.ClickImagen(new Holder.onImagenClickListener() {
             @Override
-            public void onClick(View view) {
-                if (listenerImage != null) listenerImage.onClick(view);
+            public void onImagenClick(Usuario usuario) {
+                listenerImg.onImagenClick(usuario);
             }
         });
         return holder;
@@ -72,8 +80,8 @@ public class Adaptador extends RecyclerView.Adapter implements View.OnClickListe
         return true;
     }
 
-    public void ClickImagen(View.OnClickListener listener)
+    public void ClickImagen(onImagenClickListener listener)
     {
-        if (listener != null) listenerImage = listener;
+        if (listener != null) listenerImg = listener;
     }
 }
