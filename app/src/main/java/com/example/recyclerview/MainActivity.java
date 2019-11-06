@@ -1,6 +1,8 @@
 package com.example.recyclerview;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,6 +38,12 @@ public class MainActivity extends AppCompatActivity  {
                 int pos = recycler.getChildAdapterPosition(v);
                 Toast.makeText(MainActivity.this, "Nombre " + datos[pos].getNombre() + " Apellido " + datos[pos].getApellido(),Toast.LENGTH_LONG).show();
                 return true;
+            }
+        });
+        adaptador.ClickImagen(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Has pulsado la imagen", Toast.LENGTH_LONG).show();
             }
         });
         recycler.setAdapter(adaptador);
