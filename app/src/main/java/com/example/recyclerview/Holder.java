@@ -11,10 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-    public interface onImagenClickListener
-    {
-        void onImagenClick(Usuario usuario);
-    }
 
     TextView txtNombre, txtApellido;
     ImageButton botonImagen;
@@ -40,6 +36,8 @@ public class Holder extends RecyclerView.ViewHolder implements View.OnClickListe
             itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPares));
         else
             itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorImpares));
+        if (usuario.getNombre().contains("3"))  botonImagen.setVisibility(View.INVISIBLE);
+        else botonImagen.setVisibility(View.VISIBLE);
 
         this.usuario = usuario;
         txtNombre.setText(usuario.getNombre());

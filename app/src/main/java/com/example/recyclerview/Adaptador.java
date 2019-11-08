@@ -2,25 +2,24 @@ package com.example.recyclerview;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 
-public class Adaptador extends RecyclerView.Adapter implements View.OnClickListener, View.OnLongClickListener
-{
-    public interface onImagenClickListener
-    {
-        void onImagenClick(Usuario usuario);
-    }
+
+public class Adaptador extends RecyclerView.Adapter implements View.OnClickListener, View.OnLongClickListener, View.OnTouchListener{
 
     Context context;
     Holder holder;
     View.OnClickListener listener, listenerImage;
     View.OnLongClickListener longListener;
     onImagenClickListener listenerImg;
+    View.OnTouchListener listenerTouch;
 
     public Adaptador(Context  context)
     {
@@ -29,13 +28,16 @@ public class Adaptador extends RecyclerView.Adapter implements View.OnClickListe
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    {
+
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview, parent, false);
         holder = new Holder(view, context);
         view.setOnClickListener(this);
         view.setOnLongClickListener(this);
+        view.setOnTouchListener(this);
 
-        holder.ClickImagen(new Holder.onImagenClickListener() {
+        holder.ClickImagen(new onImagenClickListener() {
             @Override
             public void onImagenClick(Usuario usuario) {
                 listenerImg.onImagenClick(usuario);
@@ -83,5 +85,18 @@ public class Adaptador extends RecyclerView.Adapter implements View.OnClickListe
     public void ClickImagen(onImagenClickListener listener)
     {
         if (listener != null) listenerImg = listener;
+    }
+
+    public void setTouchListener(View.OnTouchListener listenerTouch)
+    {
+        if (listenerTouch != null)
+            this.listenerTouch = listenerTouch;
+    }
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent)
+    {
+        if (listenerTouch != null)
+            listenerTouch.onTouch(view, motionEvent);
+        return false;
     }
 }
